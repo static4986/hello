@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiger.hello.dao.RisklibraryDao" >
+  <resultMap id="BaseResultMap" type="com.ruiger.hello.pojo.Risklibrary" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="riskType" property="risktype" jdbcType="VARCHAR" />
+    <result column="riskName" property="riskname" jdbcType="VARCHAR" />
+    <result column="riskCode" property="riskcode" jdbcType="VARCHAR" />
+    <result column="riskValue" property="riskvalue" jdbcType="VARCHAR" />
+    <result column="riskAnswer" property="riskanswer" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, riskType, riskName, riskCode, riskValue, riskAnswer
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ruiger.hello.pojo.RisklibraryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from riskLibrary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from riskLibrary
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from riskLibrary
+    where riskCode = #{riskCode,jdbcType=VARCHAR}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from riskLibrary
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ruiger.hello.pojo.RisklibraryExample" >
+    delete from riskLibrary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ruiger.hello.pojo.Risklibrary" >
+    insert into riskLibrary (id, riskType, riskName, 
+      riskCode, riskValue, riskAnswer
+      )
+    values (#{id,jdbcType=INTEGER}, #{risktype,jdbcType=VARCHAR}, #{riskname,jdbcType=VARCHAR}, 
+      #{riskcode,jdbcType=VARCHAR}, #{riskvalue,jdbcType=VARCHAR}, #{riskanswer,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ruiger.hello.pojo.Risklibrary" >
+    insert into riskLibrary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="risktype != null" >
+        riskType,
+      </if>
+      <if test="riskname != null" >
+        riskName,
+      </if>
+      <if test="riskcode != null" >
+        riskCode,
+      </if>
+      <if test="riskvalue != null" >
+        riskValue,
+      </if>
+      <if test="riskanswer != null" >
+        riskAnswer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="risktype != null" >
+        #{risktype,jdbcType=VARCHAR},
+      </if>
+      <if test="riskname != null" >
+        #{riskname,jdbcType=VARCHAR},
+      </if>
+      <if test="riskcode != null" >
+        #{riskcode,jdbcType=VARCHAR},
+      </if>
+      <if test="riskvalue != null" >
+        #{riskvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="riskanswer != null" >
+        #{riskanswer,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ruiger.hello.pojo.RisklibraryExample" resultType="java.lang.Integer" >
+    select count(*) from riskLibrary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update riskLibrary
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.risktype != null" >
+        riskType = #{record.risktype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.riskname != null" >
+        riskName = #{record.riskname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.riskcode != null" >
+        riskCode = #{record.riskcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.riskvalue != null" >
+        riskValue = #{record.riskvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.riskanswer != null" >
+        riskAnswer = #{record.riskanswer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update riskLibrary
+    set id = #{record.id,jdbcType=INTEGER},
+      riskType = #{record.risktype,jdbcType=VARCHAR},
+      riskName = #{record.riskname,jdbcType=VARCHAR},
+      riskCode = #{record.riskcode,jdbcType=VARCHAR},
+      riskValue = #{record.riskvalue,jdbcType=VARCHAR},
+      riskAnswer = #{record.riskanswer,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ruiger.hello.pojo.Risklibrary" >
+    update riskLibrary
+    <set >
+      <if test="risktype != null" >
+        riskType = #{risktype,jdbcType=VARCHAR},
+      </if>
+      <if test="riskname != null" >
+        riskName = #{riskname,jdbcType=VARCHAR},
+      </if>
+      <if test="riskcode != null" >
+        riskCode = #{riskcode,jdbcType=VARCHAR},
+      </if>
+      <if test="riskvalue != null" >
+        riskValue = #{riskvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="riskanswer != null" >
+        riskAnswer = #{riskanswer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ruiger.hello.pojo.Risklibrary" >
+    update riskLibrary
+    set riskType = #{risktype,jdbcType=VARCHAR},
+      riskName = #{riskname,jdbcType=VARCHAR},
+      riskCode = #{riskcode,jdbcType=VARCHAR},
+      riskValue = #{riskvalue,jdbcType=VARCHAR},
+      riskAnswer = #{riskanswer,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

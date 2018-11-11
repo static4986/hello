@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiger.hello.dao.IssuepointtransitiondetailDao" >
+  <resultMap id="BaseResultMap" type="com.ruiger.hello.pojo.Issuepointtransitiondetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userUuid" property="useruuid" jdbcType="VARCHAR" />
+    <result column="userPhone" property="userphone" jdbcType="VARCHAR" />
+    <result column="issuePointNum" property="issuepointnum" jdbcType="VARCHAR" />
+    <result column="issueDepartment" property="issuedepartment" jdbcType="VARCHAR" />
+    <result column="issueDate" property="issuedate" jdbcType="TIMESTAMP" />
+    <result column="issueSystem" property="issuesystem" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, userUuid, userPhone, issuePointNum, issueDepartment, issueDate, issueSystem
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ruiger.hello.pojo.IssuepointtransitiondetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from issuePointTransitionDetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from issuePointTransitionDetail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from issuePointTransitionDetail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from issuePointTransitionDetail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ruiger.hello.pojo.IssuepointtransitiondetailExample" >
+    delete from issuePointTransitionDetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ruiger.hello.pojo.Issuepointtransitiondetail" >
+    insert into issuePointTransitionDetail (id, userUuid, userPhone, 
+      issuePointNum, issueDepartment, issueDate, 
+      issueSystem)
+    values (#{id,jdbcType=INTEGER}, #{useruuid,jdbcType=VARCHAR}, #{userphone,jdbcType=VARCHAR}, 
+      #{issuepointnum,jdbcType=VARCHAR}, #{issuedepartment,jdbcType=VARCHAR}, #{issuedate,jdbcType=TIMESTAMP}, 
+      #{issuesystem,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ruiger.hello.pojo.Issuepointtransitiondetail" >
+    insert into issuePointTransitionDetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="useruuid != null" >
+        userUuid,
+      </if>
+      <if test="userphone != null" >
+        userPhone,
+      </if>
+      <if test="issuepointnum != null" >
+        issuePointNum,
+      </if>
+      <if test="issuedepartment != null" >
+        issueDepartment,
+      </if>
+      <if test="issuedate != null" >
+        issueDate,
+      </if>
+      <if test="issuesystem != null" >
+        issueSystem,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="userphone != null" >
+        #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="issuepointnum != null" >
+        #{issuepointnum,jdbcType=VARCHAR},
+      </if>
+      <if test="issuedepartment != null" >
+        #{issuedepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="issuedate != null" >
+        #{issuedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issuesystem != null" >
+        #{issuesystem,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ruiger.hello.pojo.IssuepointtransitiondetailExample" resultType="java.lang.Integer" >
+    select count(*) from issuePointTransitionDetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update issuePointTransitionDetail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.useruuid != null" >
+        userUuid = #{record.useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userphone != null" >
+        userPhone = #{record.userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issuepointnum != null" >
+        issuePointNum = #{record.issuepointnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issuedepartment != null" >
+        issueDepartment = #{record.issuedepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issuedate != null" >
+        issueDate = #{record.issuedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.issuesystem != null" >
+        issueSystem = #{record.issuesystem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update issuePointTransitionDetail
+    set id = #{record.id,jdbcType=INTEGER},
+      userUuid = #{record.useruuid,jdbcType=VARCHAR},
+      userPhone = #{record.userphone,jdbcType=VARCHAR},
+      issuePointNum = #{record.issuepointnum,jdbcType=VARCHAR},
+      issueDepartment = #{record.issuedepartment,jdbcType=VARCHAR},
+      issueDate = #{record.issuedate,jdbcType=TIMESTAMP},
+      issueSystem = #{record.issuesystem,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ruiger.hello.pojo.Issuepointtransitiondetail" >
+    update issuePointTransitionDetail
+    <set >
+      <if test="useruuid != null" >
+        userUuid = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="userphone != null" >
+        userPhone = #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="issuepointnum != null" >
+        issuePointNum = #{issuepointnum,jdbcType=VARCHAR},
+      </if>
+      <if test="issuedepartment != null" >
+        issueDepartment = #{issuedepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="issuedate != null" >
+        issueDate = #{issuedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issuesystem != null" >
+        issueSystem = #{issuesystem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ruiger.hello.pojo.Issuepointtransitiondetail" >
+    update issuePointTransitionDetail
+    set userUuid = #{useruuid,jdbcType=VARCHAR},
+      userPhone = #{userphone,jdbcType=VARCHAR},
+      issuePointNum = #{issuepointnum,jdbcType=VARCHAR},
+      issueDepartment = #{issuedepartment,jdbcType=VARCHAR},
+      issueDate = #{issuedate,jdbcType=TIMESTAMP},
+      issueSystem = #{issuesystem,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
