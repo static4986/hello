@@ -1,28 +1,42 @@
-package plausibcheck.adress
+package com.ruiger.rules
 
-import com.ruiger.hello.pojo.Risklibrary;
 import com.ruiger.hello.pojo.Issuepointtransitiondetail;
+import com.ruiger.hello.pojo.Risklibrary;
 import com.ruiger.hello.pojo.ResultCheck;
 
 
 rule "issue point number must less than 100"
-
     when
-        $riskType : Risklibrary();
-        issuePoint : Issuepointtransitiondetail(issuepointnum < $riskType.getRiskvalue())
-        checkResult : ResultCheck();
+        risk : Risklibrary();
+        issuePoint : Issuepointtransitiondetail(Integer.valueOf(issuepointnum)  < Integer.valueOf(risk.getRiskanswer()));
+        resultCheck : ResultCheck();
     then
-        checkResult.setPass(true);
-        System.out.println("规则中打印日志：校验通过!");
+        resultCheck.setPass(true);
+        System.out.println("下发积分："+issuePoint.getIssuepointnum());
+        System.out.println("分控上限："+risk.getRiskanswer());
+        System.out.println("小于!");
 end
 
 rule "issue point number must more than 100"
-
     when
-        $riskType : Risklibrary(riskvalue>"1");
-                issuePoint : Issuepointtransitiondetail(issuepointnum >= $riskType.getRiskvalue())
-        checkResult : ResultCheck();
+        risk : Risklibrary();
+        issuePoint : Issuepointtransitiondetail(Integer.valueOf(issuepointnum)  > Integer.valueOf(risk.getRiskanswer()));
+        resultCheck : ResultCheck();
     then
-        checkResult.setPass(false);
-        System.out.println("分数预警！！！！！");
+        resultCheck.setPass(false);
+        System.out.println("下发积分："+issuePoint.getIssuepointnum());
+        System.out.println("分控上限："+risk.getRiskanswer());
+        System.out.println("大于");
+end
+
+rule "== 100"
+    when
+        risk : Risklibrary();
+        issuePoint : Issuepointtransitiondetail(Integer.valueOf(issuepointnum)  == Integer.valueOf(risk.getRiskanswer()));
+        resultCheck : ResultCheck();
+    then
+        resultCheck.setPass(false);
+        System.out.println("下发积分："+issuePoint.getIssuepointnum());
+        System.out.println("分控上限："+risk.getRiskanswer());
+        System.out.println("等于");
 end

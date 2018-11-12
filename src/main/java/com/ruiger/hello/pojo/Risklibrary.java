@@ -2,9 +2,6 @@ package com.ruiger.hello.pojo;
 
 public class Risklibrary {
 
-    public Risklibrary() {
-    }
-
     private Integer id;
 
     private String risktype;

@@ -4,9 +4,6 @@ import java.util.Date;
 
 public class Issuepointtransitiondetail {
 
-    public Issuepointtransitiondetail() {
-    }
-
     private Integer id;
 
     private String useruuid;
