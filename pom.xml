@@ -42,6 +42,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-typehandlers-jsr310</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -85,6 +91,7 @@
             <artifactId>drools-compiler</artifactId>
             <version>7.13.0.Final</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -95,6 +102,8 @@
             </plugin>
         </plugins>
     </build>
+
+
 
 
 </project>

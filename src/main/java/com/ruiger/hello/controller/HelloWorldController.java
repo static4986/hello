@@ -6,6 +6,7 @@ import com.ruiger.hello.pojo.Risklibrary;
 import com.ruiger.hello.service.IssuePointTransitionDetailService;
 import com.ruiger.hello.service.RiskLibraryService;
 import org.apache.ibatis.annotations.Param;
+import org.kie.api.KieBase;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/hello")
@@ -33,12 +37,16 @@ public class HelloWorldController {
         return risklibrary;
     }
 
+    /*@Resource
+    private KieSession kieSession;*/
+
     @Resource
-    private KieSession kieSession;
+    private KieBase kieBase;
 
     @ResponseBody
     @RequestMapping("/risk")
     public String test(Integer id) {
+        KieSession kieSession = kieBase.newKieSession();
         String result=new String();
         Issuepointtransitiondetail issueDetail1 = issue.queryById(id);
         Risklibrary risklibrary=riskLibraryService.queryByCode("1");
@@ -59,6 +67,32 @@ public class HelloWorldController {
             System.out.println("积分已经超过"+risklibrary.getRiskanswer()+",不符合规定，请及时处理");
             result="积分已经超过"+risklibrary.getRiskanswer()+",不符合规定，请及时处理";
         }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping("/listTest")
+    public String listTest(String phone,String department) {
+        KieSession kieSession = kieBase.newKieSession();
+        String result=null;
+        List<Risklibrary> risklibraries = riskLibraryService.queryList("org", "202", "issuePoint");
+        risklibraries.forEach(c->kieSession.insert(c));
+        List<Risklibrary> daysLimitList = risklibraries.stream()
+                                                       .filter(c -> "days".equals(c.getRiskvalue()))
+                                                       .collect(Collectors.toList());
+        for (Risklibrary r:daysLimitList) {
+            Integer queryDays = Integer.valueOf(r.getRiskanswer());
+            LocalDate startDay=LocalDate.now().minusDays(queryDays-1);
+            Integer totalNum = issue.queryNumByPhontAndOrg(department, phone, startDay);
+            ResultCheck resultCheck=new ResultCheck();
+            resultCheck.setCount(totalNum);
+            resultCheck.setRiskanswer(r.getRiskanswer());
+            kieSession.insert(resultCheck);
+        }
+        int ruleFiredCount = kieSession.fireAllRules();
+        kieSession.destroy();
+        System.out.println("触发了" + ruleFiredCount + "条规则");
+        System.out.println("*************************************************************************");
         return result;
     }
 }

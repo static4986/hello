@@ -5,6 +5,8 @@ import com.ruiger.hello.pojo.IssuepointtransitiondetailExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -32,4 +34,12 @@ public interface IssuepointtransitiondetailDao {
     int updateByPrimaryKey(Issuepointtransitiondetail record);
 
     Issuepointtransitiondetail queryById(@Param("id") Integer id);
+
+    List<Issuepointtransitiondetail> queryByPhontAndOrg(@Param("issueDepartment") String issueDepartment,
+                                                        @Param("userPhone") String userPhone,
+                                                        @Param("startDate") LocalDate startDate);
+
+    Integer queryNumByPhontAndOrg(@Param("issueDepartment") String issueDepartment,
+                                                        @Param("userPhone") String userPhone,
+                                                        @Param("startDate") String startDate);
 }

@@ -14,6 +14,8 @@ public class Risklibrary {
 
     private String riskanswer;
 
+    private String groupId;
+
     public Integer getId() {
         return id;
     }
@@ -64,5 +66,14 @@ public class Risklibrary {
 
     public  String getType(){
         return risktype;
+    }
+
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 }

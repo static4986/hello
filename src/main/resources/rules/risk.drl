@@ -2,9 +2,11 @@ package com.ruiger.rules
 
 import com.ruiger.hello.pojo.Issuepointtransitiondetail;
 import com.ruiger.hello.pojo.Risklibrary;
-import com.ruiger.hello.pojo.ResultCheck;
+import com.ruiger.hello.pojo.ResultCheck
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 
+/*
 rule "issue point number must less than 100"
     when
         risk : Risklibrary();
@@ -39,4 +41,47 @@ rule "== 100"
         System.out.println("下发积分："+issuePoint.getIssuepointnum());
         System.out.println("分控上限："+risk.getRiskanswer());
         System.out.println("等于");
+end*/
+
+
+/*rule "issue point number must less than 100"
+    when
+        $risk : Risklibrary(riskvalue=="days");
+        $riskDemo : Risklibrary(groupId == $risk.groupId,riskvalue=="pointsNum");
+        resultCheck : ResultCheck();
+    then
+        System.out.println("====================================================");
+        System.out.println($riskDemo.getRiskanswer()+":"+$riskDemo.getRiskvalue());
+        System.out.println($risk.getRiskanswer()+":"+$risk.getRiskvalue());
+        System.out.println("====================================================");
+end*/
+
+rule "issue point number more than task"
+    when
+        $risk : Risklibrary(riskvalue=="days");
+        $riskDemo : Risklibrary(groupId == $risk.groupId,riskvalue=="pointsNum");
+        $resultCheck : ResultCheck(riskanswer==$risk.getRiskanswer(),count>=Integer.valueOf($riskDemo.getRiskanswer()));
+    then
+        System.out.println("====================================================");
+        System.out.println($riskDemo.getRiskanswer()+":"+$riskDemo.getRiskvalue());
+        System.out.println($risk.getRiskanswer()+":"+$risk.getRiskvalue());
+        System.out.println("下发积分："+$resultCheck.getCount());
+        $resultCheck.setPass(false);
+        System.out.println("超过范围");
+        System.out.println("====================================================");
+end
+
+rule "issue point number less than task"
+    when
+        $risk : Risklibrary(riskvalue=="days");
+        $riskDemo : Risklibrary(groupId == $risk.groupId,riskvalue=="pointsNum");
+        resultCheck : ResultCheck(riskanswer==$risk.getRiskanswer(),count<Integer.valueOf($riskDemo.getRiskanswer()));
+    then
+        System.out.println("====================================================");
+        System.out.println($riskDemo.getRiskanswer()+":"+$riskDemo.getRiskvalue());
+        System.out.println($risk.getRiskanswer()+":"+$risk.getRiskvalue());
+        System.out.println("下发积分："+resultCheck.getCount());
+        resultCheck.setPass(true);
+        System.out.println("符合要求");
+        System.out.println("====================================================");
 end

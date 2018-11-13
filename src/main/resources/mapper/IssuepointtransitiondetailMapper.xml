@@ -85,8 +85,17 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select id="queryByPhontAndOrg" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from issuePointTransitionDetail
+    where userPhone = #{userPhone,jdbcType=VARCHAR}
+      and issueDepartment=#{issueDepartment,jdbcType=VARCHAR}
+      and issueDate &gt; =  #{startDate,jdbcType=TIMESTAMP}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from issuePointTransitionDetail
     where id = #{id,jdbcType=INTEGER}
@@ -110,11 +119,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ruiger.hello.pojo.Issuepointtransitiondetail" >
-    insert into issuePointTransitionDetail (id, userUuid, userPhone, 
-      issuePointNum, issueDepartment, issueDate, 
+    insert into issuePointTransitionDetail (id, userUuid, userPhone,
+      issuePointNum, issueDepartment, issueDate,
       issueSystem)
-    values (#{id,jdbcType=INTEGER}, #{useruuid,jdbcType=VARCHAR}, #{userphone,jdbcType=VARCHAR}, 
-      #{issuepointnum,jdbcType=VARCHAR}, #{issuedepartment,jdbcType=VARCHAR}, #{issuedate,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{useruuid,jdbcType=VARCHAR}, #{userphone,jdbcType=VARCHAR},
+      #{issuepointnum,jdbcType=VARCHAR}, #{issuedepartment,jdbcType=VARCHAR}, #{issuedate,jdbcType=TIMESTAMP},
       #{issuesystem,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ruiger.hello.pojo.Issuepointtransitiondetail" >
@@ -248,4 +257,13 @@
       issueSystem = #{issuesystem,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryNumByPhontAndOrg" resultType="java.lang.Integer" >
+    select
+    sum(issuePointNum)
+    from issuePointTransitionDetail
+    where userPhone = #{userPhone,jdbcType=VARCHAR}
+    and issueDepartment=#{issueDepartment,jdbcType=VARCHAR}
+    and issueDate &gt;=  #{startDate,jdbcType=VARCHAR}
+  </select>
 </mapper>

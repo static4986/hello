@@ -1,5 +1,6 @@
 package com.ruiger.hello.pojo;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Issuepointtransitiondetail {
@@ -14,7 +15,7 @@ public class Issuepointtransitiondetail {
 
     private String issuedepartment;
 
-    private Date issuedate;
+    private LocalDate issuedate;
 
     private String issuesystem;
 
@@ -59,11 +60,11 @@ public class Issuepointtransitiondetail {
         this.issuedepartment = issuedepartment == null ? null : issuedepartment.trim();
     }
 
-    public Date getIssuedate() {
+    public LocalDate getIssuedate() {
         return issuedate;
     }
 
-    public void setIssuedate(Date issuedate) {
+    public void setIssuedate(LocalDate issuedate) {
         this.issuedate = issuedate;
     }
 

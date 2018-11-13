@@ -32,4 +32,7 @@ public interface RisklibraryDao {
     int updateByPrimaryKey(Risklibrary record);
 
     Risklibrary queryByCode(@Param("riskCode") String riskCode);
+
+    List<Risklibrary> queryList(@Param("riskType") String riskType,
+                                @Param("riskName") String riskName,@Param("riskCode") String riskCode);
 }
