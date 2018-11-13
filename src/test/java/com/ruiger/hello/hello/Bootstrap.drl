@@ -1,0 +1,8 @@
+import com.ruiger.hello.hello.State
+rule Bootstrap
+    when
+        a : State(name == "A", state == State.NOTRUN )
+    then
+        System.out.println(a.getName() + " finished" );
+        a.setState( State.FINISHED );
+end

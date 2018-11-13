@@ -5,7 +5,6 @@ import com.ruiger.hello.pojo.ResultCheck;
 import com.ruiger.hello.pojo.Risklibrary;
 import com.ruiger.hello.service.IssuePointTransitionDetailService;
 import com.ruiger.hello.service.RiskLibraryService;
-import org.apache.ibatis.annotations.Param;
 import org.kie.api.KieBase;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
